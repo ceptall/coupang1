@@ -157,7 +157,10 @@
     } else if (type === 'rocket') {
       render(PRODUCTS.filter(function(x) { return x.isRocket; }));
     } else {
-      render(PRODUCTS.filter(function(x) { return x.categoryName && x.categoryName.indexOf(type) > -1; }));
+      render(PRODUCTS.filter(function(x) {
+        var target = (x.categoryKeyword || '') + (x.categoryName || '');
+        return target.indexOf(type) > -1;
+      }));
     }
   }
 
