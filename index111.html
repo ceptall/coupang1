@@ -97,7 +97,6 @@
 </footer>
 
 <script>
- <script>
   /* [n8n 카테고리별 데이터 주입부] */
   var CAT_DATA = {
     "가전디지털": {{DATA_DIGITAL}},
@@ -110,7 +109,7 @@
     "스포츠": {{DATA_SPORTS}}
   };
 
-  // 모든 데이터를 하나로 합치는 작업 (초기 로딩용)
+  // 모든 데이터를 하나로 합치는 작업
   var PRODUCTS = [];
   for (var key in CAT_DATA) {
     if (Array.isArray(CAT_DATA[key])) {
