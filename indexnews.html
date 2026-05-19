@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 글로벌 뉴스 대시보드</title>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-kr: #0284c7;
+            --accent-us: #b91c1c;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 16px;
+        }
+
+        /* 워드프레스 iframe 내 최적화를 위해 여백 조절 가능한 컨테이너 */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .update-time {
+            font-size: 13px;
+            color: var(--text-muted);
+            background: #edf2f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* 2단 반응형 그리드 시스템 (flex/block 대용 구조) */
+        .grid-container {
+            width: 100%;
+        }
+
+        .section-column {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-left: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title.kr { border-left: 4px solid var(--accent-kr); color: var(--accent-kr); }
+        .section-title.us { border-left: 4px solid var(--accent-us); color: var(--accent-us); }
+
+        /* 뉴스 카드 스타일 */
+        .news-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .news-source {
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .news-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            text-decoration: none;
+            line-height: 1.4;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .news-title:hover {
+            color: #2563eb;
+        }
+
+        .news-desc {
+            font-size: 13px;
+            color: #475569;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 데스크톱 뷰 (화면이 넓어질 때 2열 배치) */
+        @media (min-width: 768px) {
+            .grid-row {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+            .section-column {
+                display: table-cell;
+                width: 50%;
+                padding: 0 12px;
+                vertical-align: top;
+            }
+            .grid-row {
+                margin: 0 -12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="header">
+        <h1>Global News Dashboard</h1>
+        <!-- n8n이 업데이트할 때 이 영역의 텍스트를 현재 시간으로 교체하도록 설계 -->
+        <div class="update-time">최근 업데이트: <span id="sync-time">2026-05-20 05:00</span></div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-row">
+            
+            <!-- 대한민국 주요 뉴스 Column -->
+            <div class="section-column">
+                <h2 class="section-title kr">대한민국 주요 이슈</h2>
+                <div id="kr-news-container">
+                    
+                    <!-- 뉴스 카드 1 -->
+                    <div class="news-card">
+                        <div class="news-meta">
+                            <span class="news-source">연합뉴스</span>
+                            <span class="news-time">방금 전</span>
+                        </div>
+                        <a href="https://example.com/news1" target="_blank" class="news-title">국내 주요 경제 지표 발표 및 금리 동향 분석</a>
+                        <p class="news-desc">한국은행이 발표한 최신 금융시장 동향에 따르면 시장 예상치를 웃도는 경제 지표가 확인되며 향후 통화 정책 방향에 대한 관심이 집중되고 있습니다.</p>
+                    </div>
+
+                    <!-- 뉴스 카드 2 -->
+                    <div class="news-card">
+                        <div class="news-meta">
+                            <span class="news-source">네이버 뉴스</span>
+                            <span class="news-time">1시간 전</span>
+                        </div>
+                        <a href="https://example.com/news2" target="_blank" class="news-title">IT·테크 업계 신기술 트렌드 및 AI 생태계 확장</a>
+                        <p class="news-desc">국내 주요 기술 기업들이 자체 거대언어모델(LLM) 고도화 및 서비스 상용화 계획을 연이어 발표하며 글로벌 경쟁력 확보에 나섰습니다.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 미국 주요 뉴스 Column -->
+            <div class="section-column">
+                <h2 class="section-title us">미국 주요 이슈</h2>
+                <div id="us-news-container">
+                    
+                    <!-- 뉴스 카드 1 -->
+                    <div class="news-card">
+                        <div class="news-meta">
+                            <span class="news-source">Reuters</span>
+                            <span class="news-time">30분 전</span>
+                        </div>
+                        <a href="https://example.com/news3" target="_blank" class="news-title">Federal Reserve Signals Potential Shift in Monetary Stance</a>
+                        <p class="news-desc">The Federal Reserve's latest meeting minutes suggest policymakers are carefully monitoring inflationary pressures while evaluating employment data trends.</p>
+                    </div>
+
+                    <!-- 뉴스 카드 2 -->
+                    <div class="news-card">
+                        <div class="news-meta">
+                            <span class="news-source">Bloomberg</span>
+                            <span class="news-time">2시간 전</span>
+                        </div>
+                        <a href="https://example.com/news4" target="_blank" class="news-title">Tech Stocks Rally as Earnings Exceed Market Expectations</a>
+                        <p class="news-desc">Major technology infrastructure and software providers reported quarterly results that outperformed analyst projections, driving indices upward.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
