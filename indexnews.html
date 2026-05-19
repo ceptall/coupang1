@@ -6,222 +6,197 @@
     <title>실시간 글로벌 뉴스 대시보드</title>
     <style>
         :root {
-            --bg-primary: #f8fafc;
+            --bg-primary: #f1f5f9;
             --bg-card: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --accent-kr: #0284c7;
-            --accent-us: #b91c1c;
             --border-color: #e2e8f0;
+            --kr-color: #0284c7;
+            --us-color: #e11d48;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-main);
-            line-height: 1.5;
-            padding: 16px;
+            line-height: 1.6;
+            padding: 12px;
         }
-
-        /* 워드프레스 iframe 내 최적화를 위해 여백 조절 가능한 컨테이너 */
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .dashboard-container { max-width: 1200px; margin: 0 auto; }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 6px 4px 16px 4px;
+            border-bottom: 2px solid var(--border-color); 
+            margin-bottom: 20px; 
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 24px;
+        .header h1 { font-size: 22px; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
+        .update-time { font-size: 12px; color: var(--text-muted); background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+        
+        .section-column { width: 100%; margin-bottom: 24px; }
+        .section-title { font-size: 17px; font-weight: 800; margin-bottom: 14px; padding-left: 10px; display: flex; align-items: center; }
+        .section-title.kr { border-left: 4px solid var(--kr-color); color: var(--kr-color); }
+        .section-title.us { border-left: 4px solid var(--us-color); color: var(--us-color); }
+        
+        .news-card { 
+            background-color: var(--bg-card); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            padding: 18px; 
+            margin-bottom: 14px; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            transition: all 0.2s ease-in-out;
         }
-
-        .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .update-time {
-            font-size: 13px;
-            color: var(--text-muted);
-            background: #edf2f7;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        /* 2단 반응형 그리드 시스템 (flex/block 대용 구조) */
-        .grid-container {
-            width: 100%;
-        }
-
-        .section-column {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            padding-left: 8px;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title.kr { border-left: 4px solid var(--accent-kr); color: var(--accent-kr); }
-        .section-title.us { border-left: 4px solid var(--accent-us); color: var(--accent-us); }
-
-        /* 뉴스 카드 스타일 */
-        .news-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
         .news-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            border-color: #cbd5e1;
         }
-
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .news-source {
-            font-weight: 600;
-            color: #475569;
-        }
-
-        .news-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-            text-decoration: none;
-            line-height: 1.4;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .news-title:hover {
-            color: #2563eb;
-        }
-
-        .news-desc {
-            font-size: 13px;
-            color: #475569;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* 데스크톱 뷰 (화면이 넓어질 때 2열 배치) */
+        .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-bottom: 10px; }
+        
+        .news-source { font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 11px; }
+        .news-source.kr-tag { color: var(--kr-color); background: #e0f2fe; }
+        .news-source.us-tag { color: var(--us-color); background: #ffe4e6; }
+        .news-time { color: var(--text-muted); font-weight: 500; }
+        
+        .news-title { font-size: 15px; font-weight: 700; color: #1e293b; text-decoration: none; line-height: 1.4; display: block; margin-bottom: 8px; letter-spacing: -0.3px; }
+        .news-title:hover { color: #2563eb; text-decoration: underline; }
+        
+        .news-desc { font-size: 13px; color: #475569; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-align: justify; }
+        
         @media (min-width: 768px) {
-            .grid-row {
-                display: table;
-                width: 100%;
-                table-layout: fixed;
-            }
-            .section-column {
-                display: table-cell;
-                width: 50%;
-                padding: 0 12px;
-                vertical-align: top;
-            }
-            .grid-row {
-                margin: 0 -12px;
-            }
+            .grid-row { display: table; width: 100%; table-layout: fixed; margin: 0 -10px; }
+            .section-column { display: table-cell; width: 50%; padding: 0 10px; vertical-align: top; }
         }
     </style>
 </head>
 <body>
-
 <div class="dashboard-container">
     <div class="header">
         <h1>Global News Dashboard</h1>
-        <!-- n8n이 업데이트할 때 이 영역의 텍스트를 현재 시간으로 교체하도록 설계 -->
-        <div class="update-time">최근 업데이트: <span id="sync-time">2026-05-20 05:00</span></div>
+        <div class="update-time">최근 업데이트: <span id="sync-time">2026-05-20 06:15</span></div>
     </div>
-
     <div class="grid-container">
         <div class="grid-row">
-            
-            <!-- 대한민국 주요 뉴스 Column -->
             <div class="section-column">
                 <h2 class="section-title kr">대한민국 주요 이슈</h2>
                 <div id="kr-news-container">
-                    
-                    <!-- 뉴스 카드 1 -->
-                    <div class="news-card">
-                        <div class="news-meta">
-                            <span class="news-source">연합뉴스</span>
-                            <span class="news-time">방금 전</span>
-                        </div>
-                        <a href="https://example.com/news1" target="_blank" class="news-title">국내 주요 경제 지표 발표 및 금리 동향 분석</a>
-                        <p class="news-desc">한국은행이 발표한 최신 금융시장 동향에 따르면 시장 예상치를 웃도는 경제 지표가 확인되며 향후 통화 정책 방향에 대한 관심이 집중되고 있습니다.</p>
-                    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">매일경제</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.mk.co.kr/news/business/12052103" target="_blank" class="news-title">‘월매출 1억’ 믿었는데 1년만에 폐업 … 프랜차이즈 ‘진짜 숫자’ 보는 법</a>
+        <p class="news-desc">프랜차이즈 창업 가이드 ①주부 김모 씨는 남편의 퇴직에 대비해 부업에 도전했다. 김 씨가 선택한 업종은 A디저트 카페였다. 김 씨는 우연히 유튜브에서 월 매출 1억원이라는 광고를 ..</p>
+    </div>
 
-                    <!-- 뉴스 카드 2 -->
-                    <div class="news-card">
-                        <div class="news-meta">
-                            <span class="news-source">네이버 뉴스</span>
-                            <span class="news-time">1시간 전</span>
-                        </div>
-                        <a href="https://example.com/news2" target="_blank" class="news-title">IT·테크 업계 신기술 트렌드 및 AI 생태계 확장</a>
-                        <p class="news-desc">국내 주요 기술 기업들이 자체 거대언어모델(LLM) 고도화 및 서비스 상용화 계획을 연이어 발표하며 글로벌 경쟁력 확보에 나섰습니다.</p>
-                    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">매일경제</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.mk.co.kr/news/business/12051766" target="_blank" class="news-title">트럼프가 고른 방중 사절단 … 전부 보유 주식 CEO들이었다</a>
+        <p class="news-desc">미중 정상회담 리뷰 ④ 트럼프 포트폴리오지난 14~15일, 트럼프 미국 대통령과 시진핑 중국 국가주석이 베이징에서 만났다. 이번 방중 사절단의 무게는 그 자체로 기록적이었다. 미국..</p>
+    </div>
 
-                </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">매일경제</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.mk.co.kr/news/culture/12052119" target="_blank" class="news-title">세상에 이렇게나 달라? 수양대군·단종 궁합봤더니…</a>
+        <p class="news-desc">말이 필요 없는 천만 영화 ‘왕과 사는 남자’덕에 요즘 두 남자의 희비가 엇갈리고 있습니다. 단종의 무덤이 있는 영월 장릉에는 선플, 반대로 세조의 무덤이 있는 광릉에는 악플이 줄..</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">한겨레</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.hani.co.kr/arti/international/america/1259480.html" target="_blank" class="news-title">미 국무부 “후커 차관, 몇 주 안에 방한…한미 실무그룹 출범”</a>
+        <p class="news-desc">미 국무부 “후커 차관, 몇 주 안에 방한…한미 실무그룹 출범” 관련 속보 및 실시간 현장 취재 정보입니다. 자세한 리포트는 공식 링크를 통해 확인하실 수 있습니다.</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">한겨레</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.hani.co.kr/arti/opinion/column/1259479.html" target="_blank" class="news-title">“물류를 멈춰 세상을 바꾸자” [전국 프리즘]</a>
+        <p class="news-desc">“물류를 멈춰 세상을 바꾸자” [전국 프리즘] 관련 속보 및 실시간 현장 취재 정보입니다. 자세한 리포트는 공식 링크를 통해 확인하실 수 있습니다.</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source kr-tag">한겨레</span>
+            <span class="news-time">최신</span>
+        </div>
+        <a href="https://www.hani.co.kr/arti/society/environment/1259478.html" target="_blank" class="news-title">[6·3 쟁점 돋보기] “기후공약, 진보당 1위·정의당 2위… 민주당은 ‘경제’ 방점”</a>
+        <p class="news-desc">[6·3 쟁점 돋보기] “기후공약, 진보당 1위·정의당 2위… 민주당은 ‘경제’ 방점” 관련 속보 및 실시간 현장 취재 정보입니다. 자세한 리포트는 공식 링크를 통해 확인하실 수 있습니다.</p>
+    </div>
+</div>
             </div>
-
-            <!-- 미국 주요 뉴스 Column -->
             <div class="section-column">
                 <h2 class="section-title us">미국 주요 이슈</h2>
                 <div id="us-news-container">
-                    
-                    <!-- 뉴스 카드 1 -->
-                    <div class="news-card">
-                        <div class="news-meta">
-                            <span class="news-source">Reuters</span>
-                            <span class="news-time">30분 전</span>
-                        </div>
-                        <a href="https://example.com/news3" target="_blank" class="news-title">Federal Reserve Signals Potential Shift in Monetary Stance</a>
-                        <p class="news-desc">The Federal Reserve's latest meeting minutes suggest policymakers are carefully monitoring inflationary pressures while evaluating employment data trends.</p>
-                    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">CNN</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://edition.cnn.com/webview/politics/live-news/trump-indictment-stormy-daniels-news-04-03-23/index.html" target="_blank" class="news-title">Trump pleads not guilty to 34 felony counts</a>
+        <p class="news-desc">Trump pleads not guilty to 34 felony counts 관련 속보 및 실시간 현장 취재 정보입니다. 자세한 리포트는 공식 링크를 통해 확인하실 수 있습니다.</p>
+    </div>
 
-                    <!-- 뉴스 카드 2 -->
-                    <div class="news-card">
-                        <div class="news-meta">
-                            <span class="news-source">Bloomberg</span>
-                            <span class="news-time">2시간 전</span>
-                        </div>
-                        <a href="https://example.com/news4" target="_blank" class="news-title">Tech Stocks Rally as Earnings Exceed Market Expectations</a>
-                        <p class="news-desc">Major technology infrastructure and software providers reported quarterly results that outperformed analyst projections, driving indices upward.</p>
-                    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">CNN</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://www.cnn.com/videos/politics/2023/04/05/maggie-haberman-donald-trump-speech-indictment-reaction-sot-cnntm-vpx.cnn" target="_blank" class="news-title">Haberman reveals why Trump attacked judge and his family in speech</a>
+        <p class="news-desc">CNN political contributor Maggie Haberman explains the reasoning behind Donald Trump's attacks on the judge and his fami...</p>
+    </div>
 
-                </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">CNN</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://www.cnn.com/collections/intl-trump-040223/" target="_blank" class="news-title">What to know about the Trump indictment on the eve of his court appearance</a>
+        <p class="news-desc">What to know about the Trump indictment on the eve of his court appearance 관련 속보 및 실시간 현장 취재 정보입니다. 자세한 리포트는 공식 링크를 통해 확...</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/europe/russia-ukraine-oil-attacks-war-tuapse.html" target="_blank" class="news-title">As Ukraine Strikes Russian Oil Sites, an Environmental Disaster Unfolds</a>
+        <p class="news-desc">After invading more than four years ago, Moscow has usually been the one causing ecological disaster. But Kyiv’s strikes...</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/africa/ebola-outbreak-deaths-congo-who.html" target="_blank" class="news-title">Ebola Outbreak in Central Africa Could Last Months, W.H.O. Says</a>
+        <p class="news-desc">Health officials reported more than 130 suspected deaths and 540 cases in the Democratic Republic of Congo and Uganda, b...</p>
+    </div>
+
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">Live</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/asia/india-trump-auto-rickshaws.html" target="_blank" class="news-title">Trump’s Portrait Pops Up on Rickshaws in India to Mark America’s 250th</a>
+        <p class="news-desc">The president is popping up on the back of the iconic three-wheeler to kick off America’s 250th anniversary celebrations...</p>
+    </div>
+</div>
             </div>
-
         </div>
     </div>
 </div>
-
 </body>
 </html>
