@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트 카테고리 뉴스 대시보드</title>
+    <title>스마트 글로벌 카테고리 뉴스</title>
     <style>
         :root {
             --bg-primary: #f8fafc;
@@ -12,6 +12,8 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-color: #4f46e5;
+            --kr-color: #0284c7;
+            --us-color: #e11d48;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -33,7 +35,6 @@
         .header h1 { font-size: 20px; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
         .update-time { font-size: 11px; color: var(--text-muted); background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
         
-        /* 탭 메뉴 스타일 */
         .tabs-container {
             display: flex;
             gap: 6px;
@@ -54,7 +55,6 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
         .tab-btn.active {
             background: var(--accent-color);
@@ -62,7 +62,6 @@
             border-color: var(--accent-color);
         }
         
-        /* 뉴스 패널 스타일 */
         .tab-panel { display: none; }
         .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
         
@@ -80,7 +79,10 @@
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08);
         }
         .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-bottom: 10px; }
-        .news-source { font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 11px; color: var(--accent-color); background: #f5f3ff; }
+        .news-source { font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 11px; }
+        .news-source.kr-tag { color: var(--kr-color); background: #e0f2fe; }
+        .news-source.us-tag { color: var(--us-color); background: #ffe4e6; }
+        
         .news-time { color: var(--text-muted); font-weight: 500; }
         .news-title { font-size: 15px; font-weight: 700; color: #1e293b; text-decoration: none; line-height: 1.4; display: block; margin-bottom: 8px; }
         .news-title:hover { color: var(--accent-color); text-decoration: underline; }
@@ -98,10 +100,9 @@
 <div class="dashboard-container">
     <div class="header">
         <h1>Global News Lounge</h1>
-        <div class="update-time">최근 업데이트: <span>2026-05-20 07:07</span></div>
+        <div class="update-time">최근 업데이트: <span>2026-05-20 07:09</span></div>
     </div>
     
-    <!-- 스마트 카테고리 탭 상단 메뉴 -->
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('politics')">⚖️ 정치</button>
         <button class="tab-btn" onclick="switchTab('economy')">📈 경제</button>
@@ -110,119 +111,154 @@
         <button class="tab-btn" onclick="switchTab('tech')">🚀 IT·기술</button>
     </div>
     
-    <!-- 각 카테고리별 본문 패널 -->
     <div id="politics" class="tab-panel active"><div class="empty-msg">해당 카테고리에 최신 기사가 없습니다.</div></div>
     <div id="economy" class="tab-panel"><div class="empty-msg">해당 카테고리에 최신 기사가 없습니다.</div></div>
     <div id="society" class="tab-panel">
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/africa/ebola-outbreak-deaths-congo-who.html" target="_blank" class="news-title">Ebola Outbreak in Central Africa Could Last Months, W.H.O. Says</a>
         <p class="news-desc">Health officials reported more than 130 suspected deaths and 540 cases in the Democratic Republic of Congo and Uganda, b...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/europe/us-envoy-greenland-visit.html" target="_blank" class="news-title">Trump’s Special Envoy to Greenland Receives a Cold Welcome From Locals</a>
         <p class="news-desc">After President Trump’s threats to seize the island, Gov. Jeff Landry’s offers of MAGA hats and chocolate chip cookies f...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/americas/bolivia-protests-la-paz.html" target="_blank" class="news-title">Bolivia Has Been Paralyzed by Protests. Here’s Why.</a>
         <p class="news-desc">After two decades of leftist rule, many voters who backed Bolivia’s new, more conservative president say he’s made their...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/europe/oil-spill-iran-shidvar-island.html" target="_blank" class="news-title">Oil Slick Reaches a Pristine Persian Gulf Island in Iran</a>
         <p class="news-desc">Videos show birds, turtles and crabs trapped inside mounds of tar around Shidvar island, a protected wildlife sanctuary ...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/18/world/middleeast/iran-war-retaliation-options.html" target="_blank" class="news-title">Here’s How Iran Could Respond to Renewed U.S.-Israeli Strikes</a>
         <p class="news-desc">In any new round of fighting, Iranian officials could adopt new tactics, including intensified strikes on neighbors and ...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/climate/the-new-gold-rush-of-geothermal-energy.html" target="_blank" class="news-title">The New ‘Gold Rush’ of Geothermal Energy</a>
         <p class="news-desc">A new wave of start-ups are trying to harvest emissions-free energy from inside the Earth, but the industry still faces ...</p>
+    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/europe/married-at-first-sight-uk-rape-investigation.html" target="_blank" class="news-title">‘Married at First Sight’ Rape Allegations Lead to Call for U.K. Investigation</a>
+        <p class="news-desc">Two women told the BBC that they were sexually assaulted during the filming of the popular show. The accusations have re...</p>
     </div></div>
     <div id="culture" class="tab-panel"><div class="empty-msg">해당 카테고리에 최신 기사가 없습니다.</div></div>
     <div id="tech" class="tab-panel">
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/europe/russia-ukraine-oil-attacks-war-tuapse.html" target="_blank" class="news-title">As Ukraine Strikes Russian Oil Sites, an Environmental Disaster Unfolds</a>
         <p class="news-desc">After invading more than four years ago, Moscow has usually been the one causing ecological disaster. But Kyiv’s strikes...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/asia/india-trump-auto-rickshaws.html" target="_blank" class="news-title">Trump’s Portrait Pops Up on Rickshaws in India to Mark America’s 250th</a>
         <p class="news-desc">The president is popping up on the back of the iconic three-wheeler to kick off America’s 250th anniversary celebrations...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/middleeast/iran-trump-tension.html" target="_blank" class="news-title">Trump Says He Postponed a ‘Very Major Attack’ on Iran, Leaving Mideast on Edge</a>
         <p class="news-desc">President Trump threatened “another big hit” on Iran, saying the country had days to return to the negotiating table, as...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/europe/putin-china-state-visit.html" target="_blank" class="news-title">As a Weakened Putin Follows Trump to Beijing, Iran War Offers an Opening</a>
         <p class="news-desc">With the upheaval in the Persian Gulf disrupting oil and gas supplies, Russia is looking to deepen its energy ties to Ch...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/middleeast/smotrich-icc-west-bank.html" target="_blank" class="news-title">Israeli Minister Threatens to Evict Palestinians From West Bank Hamlet</a>
         <p class="news-desc">Bezalel Smotrich, the hard-line minister, said he was retaliating for the International Criminal Court prosecutor seekin...</p>
     </div>
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source">NYT</span>
-            <span class="news-time">최신속보</span>
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/19/world/europe/spain-zapatero-indicted-corruption.html" target="_blank" class="news-title">Zapatero, Spain’s Former Leader, Investigated for Graft</a>
         <p class="news-desc">José Luis Rodríguez Zapatero, who led Spain from 2004 to 2011, is accused of influence peddling after he left office. He...</p>
+    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/18/world/europe/us-greenland-talks-trump.html" target="_blank" class="news-title">In Closed-Door Talks, U.S. Demands a Major Role in Greenland</a>
+        <p class="news-desc">Greenlandic officials worry about the direction of the negotiations aimed at defusing President Trump’s threats to seize...</p>
+    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/europe/mango-son-arrest-andic.html" target="_blank" class="news-title">Son of Mango Fashion Chain’s Founder Is Arrested as Suspect in His Death</a>
+        <p class="news-desc">Isak Andic, the billionaire who built the Spanish brand, died while hiking with his son in 2024. News outlets had report...</p>
+    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/18/world/middleeast/strait-hormuz-blockade-iran-war-syria-oil.html" target="_blank" class="news-title">Blocked Strait of Hormuz Leads to New Opportunities for Syria</a>
+        <p class="news-desc">The latest war in the Middle East has created new economic opportunities for Syria thanks to its geography.</p>
+    </div>
+    <div class="news-card">
+        <div class="news-meta">
+            <span class="news-source us-tag">NYT</span>
+            <span class="news-time">LIVE</span>
+        </div>
+        <a href="https://www.nytimes.com/2026/05/19/world/aid-cuts-somalia-putin-china.html" target="_blank" class="news-title">What the End of Aid Looks Like</a>
+        <p class="news-desc">The United States and other countries are cutting humanitarian relief. Our reporter went to Somalia to see the impact.</p>
     </div></div>
 </div>
 
 <script>
-    // 탭 전환 제어용 클라이언트 자바스크립트
     function switchTab(categoryId) {
-        // 모든 버튼 활성화 해제
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        // 모든 패널 숨기기
         document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
         
-        // 클릭한 탭 버튼 및 패널 활성화
         const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(categoryId));
         if(activeBtn) activeBtn.classList.add('active');
         
