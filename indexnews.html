@@ -13,6 +13,7 @@
             --border-color: #e2e8f0;
             --kr-color: #0284c7;
             --us-color: #e11d48;
+            --bg-category: #f1f5f9;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -54,10 +55,13 @@
             border-color: #cbd5e1;
         }
         .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-bottom: 10px; }
+        .meta-left { display: flex; gap: 6px; align-items: center; }
         
         .news-source { font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 11px; }
         .news-source.kr-tag { color: var(--kr-color); background: #e0f2fe; }
         .news-source.us-tag { color: var(--us-color); background: #ffe4e6; }
+        
+        .news-category { color: var(--text-muted); background: var(--bg-category); padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; }
         .news-time { color: var(--text-muted); font-weight: 500; }
         
         .news-title { font-size: 15px; font-weight: 700; color: #1e293b; text-decoration: none; line-height: 1.4; display: block; margin-bottom: 8px; letter-spacing: -0.3px; }
@@ -75,7 +79,7 @@
 <div class="dashboard-container">
     <div class="header">
         <h1>Global News Dashboard</h1>
-        <div class="update-time">최근 업데이트: <span id="sync-time">2026-05-21 04:40</span></div>
+        <div class="update-time">최근 업데이트: <span id="sync-time">2026-05-21 04:48</span></div>
     </div>
     <div class="grid-container">
         <div class="grid-row">
@@ -84,7 +88,10 @@
                 <div id="kr-news-container">
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">연합뉴스</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">연합뉴스</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.yna.co.kr/view/AKR20260521007600071" target="_blank" class="news-title">내쳐진 여당의원의 표결 복수…트럼프 '승자의 저주' 빠지나</a>
@@ -93,7 +100,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">연합뉴스</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">연합뉴스</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.yna.co.kr/view/AKR20260521007100072" target="_blank" class="news-title">美명문대도 '학점 인플레' 골치…하버드대 A학점 비율 제한 도입</a>
@@ -102,7 +112,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">연합뉴스</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">연합뉴스</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.yna.co.kr/view/AKR20260521006900072" target="_blank" class="news-title">美연준 다수위원 "인플레 2% 계속 웃돌면 금리인상 적절"</a>
@@ -111,7 +124,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">매일경제</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">매일경제</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.mk.co.kr/news/economy/12053268" target="_blank" class="news-title">“달러당 1500원 뉴노멀 되나” … 서학개미도 동학개미도 환율이 중요한 이유</a>
@@ -120,7 +136,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">매일경제</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">매일경제</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.mk.co.kr/news/it/12053097" target="_blank" class="news-title">“버스 잡으려 뛰었을 뿐인데” … 과학이 증명한 ‘가성비 운동법’</a>
@@ -129,7 +148,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">매일경제</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">매일경제</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.mk.co.kr/news/business/12053522" target="_blank" class="news-title">“지난 1년 400% vs 800%”…앞으로 1년, 삼전·하이닉스 하나만 산다면</a>
@@ -138,7 +160,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">한겨레</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">한겨레</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.hani.co.kr/arti/international/america/1259680.html" target="_blank" class="news-title">스틸 주한미대사 후보자 “미국 기업 차별 안 돼…3500억달러 투자 직접 챙기겠다”</a>
@@ -147,7 +172,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">한겨레</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">한겨레</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.hani.co.kr/arti/opinion/editorial/1259679.html" target="_blank" class="news-title">[사설] 삼성전자 극적 타결, 다행이지만 남은 과제 많다</a>
@@ -156,7 +184,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source kr-tag">한겨레</span>
+            <div class="meta-left">
+                <span class="news-source kr-tag">한겨레</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">최신</span>
         </div>
         <a href="https://www.hani.co.kr/arti/economy/marketing/1259678.html" target="_blank" class="news-title">삼성전자, 특별성과급 10.5% 자사주 지급…비메모리 배분율도 접점 찾아</a>
@@ -169,7 +200,10 @@
                 <div id="us-news-container">
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">BBC US</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">BBC US</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.bbc.com/news/articles/cp3pz43k99xo?at_medium=RSS&at_campaign=rss" target="_blank" class="news-title">The deadly plane attack at the centre of Castro's indictment</a>
@@ -178,7 +212,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">BBC US</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">BBC US</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.bbc.com/news/articles/cdjpng88d2vo?at_medium=RSS&at_campaign=rss" target="_blank" class="news-title">Trump exerts iron grip on Republican Party with Massie defeated</a>
@@ -187,7 +224,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">BBC US</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">BBC US</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.bbc.com/news/articles/ckgpy2ze3q1o?at_medium=RSS&at_campaign=rss" target="_blank" class="news-title">Barney Frank: One of the first openly gay US congressmen dies aged 86</a>
@@ -196,7 +236,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">CNN</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">CNN</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://edition.cnn.com/webview/politics/live-news/trump-indictment-stormy-daniels-news-04-03-23/index.html" target="_blank" class="news-title">Trump pleads not guilty to 34 felony counts</a>
@@ -205,7 +248,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">CNN</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">CNN</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.cnn.com/videos/politics/2023/04/05/maggie-haberman-donald-trump-speech-indictment-reaction-sot-cnntm-vpx.cnn" target="_blank" class="news-title">Haberman reveals why Trump attacked judge and his family in speech</a>
@@ -214,7 +260,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">CNN</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">CNN</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.cnn.com/collections/intl-trump-040223/" target="_blank" class="news-title">What to know about the Trump indictment on the eve of his court appearance</a>
@@ -223,7 +272,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">NYT</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">NYT</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/20/world/asia/china-putin-trump-russia-xi.html" target="_blank" class="news-title">Days After Hosting Trump, Xi Serves Up Tea and Smiles to Putin</a>
@@ -232,7 +284,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">NYT</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">NYT</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/20/world/americas/guzman-cuba-us-negotiations-trump.html" target="_blank" class="news-title">Cuba Says the Trump Administration Is Not Negotiating in Good Faith</a>
@@ -241,7 +296,10 @@
 
     <div class="news-card">
         <div class="news-meta">
-            <span class="news-source us-tag">NYT</span>
+            <div class="meta-left">
+                <span class="news-source us-tag">NYT</span>
+                <span class="news-category">주요이슈</span>
+            </div>
             <span class="news-time">Live</span>
         </div>
         <a href="https://www.nytimes.com/2026/05/20/world/middleeast/iran-strait-of-hormuz-triangular-coercion.html" target="_blank" class="news-title">How Iran Gained Leverage in the War</a>
